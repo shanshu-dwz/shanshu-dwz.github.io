@@ -1,27 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2024/11/23/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">HelloWorld</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <title>重拾java基础系列1</title>
+    <url>/2024/11/23/%E9%87%8D%E6%8B%BEjava%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%971/</url>
+    <content><![CDATA[<p>研一第一学期即将过去了，java知识已将大半年没有碰了，最近实验室没有什么任务，刚好利用空闲时间回顾一下java基础，带着更多的知识回看Java基础，确实能引起第一次学习java时没有的思考，达到温故知新的效果。</p>
+<h3 id="java内存机制"><a href="#java内存机制" class="headerlink" title="java内存机制"></a>java内存机制</h3><p>复习时看到这样一句话，说java数组是存在堆里的，立马勾起了我的回忆，关于Java的内存机制的问题。</p>
+<ol>
+<li><strong>堆（Heap）</strong>：<ul>
+<li>是Java中最大的一块内存区域，用于存储所有的对象实例和数组。</li>
+<li>所有通过new关键字创建的对象都在堆中分配内存。</li>
+<li>堆内存可以进一步分为新生代（Young Generation）和老年代（Old Generation）。新生代存放的是新创建的对象，而老年代则存储生命周期较长的对象。</li>
+<li>垃圾回收主要发生在堆内存中，通过垃圾回收机制自动回收不再使用的对象，释放内存空间。</li>
+</ul>
+</li>
+<li><strong>栈（Stack）</strong>：<ul>
+<li>每个线程都有自己的栈，用于存储局部变量、方法调用栈帧和线程信息。</li>
+<li>栈内存中的数据是按照先进后出的方式进行管理的。</li>
+<li>当一个方法被调用时，会为该方法创建一个栈帧，包含该方法的局部变量表、操作数栈和返回地址等信息。</li>
+<li>栈中的变量存储的是基本数据类型（如int、char）的值，以及对象的引用（而对象本身存储在堆中）。</li>
+<li>当方法调用完成后，栈帧将会出栈，内存将被释放。</li>
+</ul>
+</li>
+<li><strong>方法区（Method Area）</strong>：<ul>
+<li>也称为永久代（在Java 8之前）或元空间（在Java 8及以后），用于存储类的结构信息，如类的元数据、常量池、静态变量和类构造方法（即类的字节码）。</li>
+<li>方法区在JVM启动时被创建，是所有线程共享的。</li>
+<li>常量池存储的是编译期生成的一些常量（如字符串常量、数字常量等），以及方法和字段的引用。</li>
+</ul>
+</li>
+<li><strong>程序计数器（Program Counter Register）</strong>：<ul>
+<li>每个线程私有的，存储的是当前线程执行的字节码指令的地址。</li>
+<li>JVM在多线程环境下，通过程序计数器来保存每个线程的执行状态。</li>
+</ul>
+</li>
+<li><strong>本地方法栈（Native Method Stack）</strong>：<ul>
+<li>用于存储本地方法调用的信息。当Java调用非Java语言编写的方法时（如C或C++编写的代码），相关的信息会存储在本地方法栈中。</li>
+</ul>
+</li>
+<li><strong>直接内存（Direct Memory）</strong>：<ul>
+<li>并不是JVM内存结构的严格一部分，但它经常被JVM使用。直接内存使用的是操作系统的本地内存，而不是堆内存。</li>
+<li>通过NIO（New I&#x2F;O），Java程序可以通过直接内存进行快速的数据传输，避免在堆内存和操作系统内存之间进行频繁的数据复制。</li>
+</ul>
+</li>
+</ol>
+<h3 id="面向对象三大特征"><a href="#面向对象三大特征" class="headerlink" title="面向对象三大特征"></a>面向对象三大特征</h3><p>都知道是封装、继承、和多态，那具体该如何理解呢？</p>
+<ol>
+<li><p><strong>封装（Encapsulation）</strong>：</p>
+<ul>
+<li>封装是指将对象的数据（属性）和操作这些数据的方法（行为）捆绑在一起，形成一个独立的对象（类的一个实例）。</li>
+<li>它还意味着隐藏对象的内部状态和实现细节，仅通过对象提供的接口（方法）来访问对象的属性和行为。</li>
+<li>封装提高了代码的安全性和可维护性，因为它限制了对内部数据的直接访问，防止了外部代码的不当操作。</li>
+</ul>
+</li>
+<li><p><strong>继承（Inheritance）</strong>：</p>
+<ul>
+<li>继承是一种创建新类（子类或派生类）的方式，新类基于一个或多个现有类（基类或父类）。</li>
+<li>子类继承父类的属性和方法，这有助于代码的复用和减少重复。</li>
+<li>继承还支持多态性，即子类可以重写父类的方法，以提供特定的实现。</li>
+<li>继承可以建立类之间的层次结构，有助于组织和管理代码。</li>
+</ul>
+</li>
+<li><p><strong>多态（Polymorphism）</strong>：</p>
+<ul>
+<li>多态是指允许不同类的对象对同一消息做出响应的能力，即同一个接口可以被不同的实例以不同的方式实现。</li>
+<li>这意味着一个方法调用可以有不同的行为，这取决于调用该方法的对象的实际类型。</li>
+<li>多态性使得代码更加灵活和可扩展，因为它允许开发者编写通用的代码，这些代码可以与多种类型的对象一起工作。</li>
+<li>多态性可以通过方法重载（同一个类中同名方法的不同参数列表）和方法覆盖（子类重写父类的方法）来实现。</li>
+</ul>
+<p>不好理解的应当属于多态，，多态是基于方法重写的，实现了不同子类对象调用相同的方法可以产生不同的效果。以下是一个简单的例子。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 抽象类 Animal</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">makeSound</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 狗类 Dog，继承自 Animal</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">makeSound</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Woof woof&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 猫类 Cat，继承自 Animal</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Cat</span> <span class="keyword">extends</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">makeSound</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Meow meow&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 鸟类 Bird，继承自 Animal</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bird</span> <span class="keyword">extends</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">makeSound</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Tweet tweet&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试多态性的函数</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PolymorphismExample</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">makeAnimalSound</span><span class="params">(Animal myAnimal)</span> &#123;</span><br><span class="line">        myAnimal.makeSound();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Animal</span> <span class="variable">myDog</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Dog</span>();</span><br><span class="line">        <span class="type">Animal</span> <span class="variable">myCat</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cat</span>();</span><br><span class="line">        <span class="type">Animal</span> <span class="variable">myBird</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Bird</span>();</span><br><span class="line"></span><br><span class="line">        makeAnimalSound(myDog); <span class="comment">// 输出：Woof woof</span></span><br><span class="line">        makeAnimalSound(myCat); <span class="comment">// 输出：Meow meow</span></span><br><span class="line">        makeAnimalSound(myBird); <span class="comment">// 输出：Tweet tweet</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
 ]]></content>
       <categories>
         <category>java</category>
       </categories>
       <tags>
-        <tag>hello</tag>
+        <tag>java</tag>
       </tags>
   </entry>
 </search>
