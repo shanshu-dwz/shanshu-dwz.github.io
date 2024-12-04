@@ -77,4 +77,58 @@
         <tag>java</tag>
       </tags>
   </entry>
+  <entry>
+    <title>重拾java基础系列2</title>
+    <url>/2024/12/04/%E9%87%8D%E6%8B%BEjava%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%972/</url>
+    <content><![CDATA[<h3 id="java变量"><a href="#java变量" class="headerlink" title="java变量"></a>java变量</h3><p>java变量分为局部变量，实例变量，静态变量，参数变量</p>
+<ul>
+<li>局部变量：简单说就是写在方法体里的变量，需要初始化，不初始化的话是不会被赋默认值的，直接用的话编译器会报错，这点和c语言不一样，c语言编译器不会报错，理论上有可能会设成一个随机数，但情况应该很少，多数情况下还是默认值。该变量属于方法的，所以存在栈里。</li>
+<li>实例变量：在类里声明的，会被赋默认值。该变量属于对象的，所以存在堆里。</li>
+<li>静态变量：也叫类变量，用static关键字声明的，它是属于类的，被所以该类的实例对象所共有，随类的创建而创建。该变量属于类的，所以存在方法区里。</li>
+<li>参数变量：方法声明里的变量，仅仅是传来值的副本。我们知道在c语言中有可以引用，以此真正修改传来的参数，那java里没有指针的概念，怎么做的呢？这就要提到java里两种传递类型，值传递和引用传递，值传递针对基本数据变量，不会改变原值，而引用传递针对对象，方法内部对对象成员变量的任何修改都会反映到原始对象上。该变量属于方法，存在栈里。</li>
+</ul>
+<h3 id="static和final区别"><a href="#static和final区别" class="headerlink" title="static和final区别"></a>static和final区别</h3><h4 id="static（静态）"><a href="#static（静态）" class="headerlink" title="static（静态）"></a>static（静态）</h4><p><code>static</code>关键字用于表示一个成员（变量或方法）属于类，而不是类的某个特定实例。这意味着：</p>
+<ol>
+<li><strong>类级别的访问</strong>：<code>static</code>成员可以通过类名直接访问，而不需要创建类的实例。</li>
+<li><strong>共享性</strong>：<code>static</code>成员被类的所有实例共享。对<code>static</code>变量的修改，会影响到所有访问该变量的实例。</li>
+<li><strong>生命周期</strong>：<code>static</code>成员的生命周期与类的生命周期相同，从类被加载到JVM时创建，到类被卸载时销毁。</li>
+<li><strong>静态方法</strong>：<code>static</code>方法不能访问类的非静态成员（变量和方法），因为非静态成员需要依赖于具体实例。</li>
+</ol>
+<h4 id="final（最终）"><a href="#final（最终）" class="headerlink" title="final（最终）"></a>final（最终）</h4><p><code>final</code>关键字用于表示一个实体的最终状态，意味着一旦设置，就不能再被改变。这可以应用于：</p>
+<ol>
+<li><strong>变量</strong>：将一个变量声明为<code>final</code>意味着它的值在初始化后不能被改变。</li>
+<li><strong>方法</strong>：将一个方法声明为<code>final</code>可以防止该方法被子类覆盖。</li>
+<li><strong>类</strong>：将一个类声明为<code>final</code>可以防止其他类继承这个类。</li>
+<li><strong>常量</strong>：通常与<code>static</code>一起使用，创建一个常量，这个常量的值在初始化后不能被改变，并且可以通过类名直接访问。</li>
+</ol>
+<h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><ul>
+<li><strong>作用范围</strong>：<code>static</code>关注的是成员属于类还是实例，而<code>final</code>关注的是成员的值是否可以改变。</li>
+<li><strong>共享性</strong>：<code>static</code>成员是被所有实例共享的，而<code>final</code>变量可以是实例级别的，也可以是类级别的，但它的值一旦设置就不能改变。</li>
+<li><strong>不变性</strong>：<code>final</code>提供了不变性，确保了数据的安全性，而<code>static</code>并不涉及数据的不变性。</li>
+<li><strong>使用场景</strong>：<code>static</code>通常用于创建工具类方法、类级别的常量等，而<code>final</code>用于确保数据不被改变，或者防止方法被子类覆盖。</li>
+</ul>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">UtilityClass</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CONSTANT</span> <span class="operator">=</span> <span class="number">10</span>; <span class="comment">// 既是static也是final</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">utilityMethod</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 静态方法，可以通过类名直接调用</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">nonOverridableMethod</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// final方法，不能被子类覆盖</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Example</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String name; <span class="comment">// final变量，一旦赋值后不能改变</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Example</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name; <span class="comment">// 在构造器中初始化</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 尝试修改name将会导致编译错误</span></span><br><span class="line">    <span class="comment">// public void setName(String name) &#123;</span></span><br><span class="line">    <span class="comment">//     this.name = name;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，<code>CONSTANT</code>是<code>static</code>和<code>final</code>的结合，表示它是一个类级别的常量。<code>utilityMethod</code>是一个<code>static</code>方法，可以通过类名直接调用。<code>nonOverridableMethod</code>是一个<code>final</code>方法，不能被子类覆盖。<code>Example</code>类中的<code>name</code>是一个<code>final</code>变量，一旦在构造器中初始化后，就不能被改变。</p>
+<h2 id="访问控制修饰符"><a href="#访问控制修饰符" class="headerlink" title="访问控制修饰符"></a>访问控制修饰符</h2><p>Java中，可以使用访问控制符来保护对类、变量、方法和构造方法的访问。Java 支持 4 种不同的访问权限。</p>
+<ul>
+<li><strong>default</strong> (即默认，什么也不写）: 在同一包内可见，不使用任何修饰符。使用对象：类、接口、变量、方法。</li>
+<li><strong>private</strong> : 在同一类内可见。使用对象：变量、方法。 <strong>注意：不能修饰类（外部类）</strong></li>
+<li><strong>public</strong> : 对所有类可见。使用对象：类、接口、变量、方法</li>
+<li><strong>protected</strong> : 对同一包内的类和所有子类可见。使用对象：变量、方法。 <strong>注意：不能修饰类（外部类）</strong>。</li>
+</ul>
+<p><img src="/2024%5C12%5C04%5C%E9%87%8D%E6%8B%BEjava%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%972%5C1733298988738.png" alt="访问控制修饰符权限"></p>
+<ul>
+<li><strong>子类与基类在同一包中</strong>：被声明为 protected 的变量、方法和构造器能被同一个包中的任何其他类访问；</li>
+<li><strong>子类与基类不在同一包中</strong>：那么在子类中，子类实例可以访问其从基类继承而来的 protected 方法，而不能访问基类实例的protected方法。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
 </search>
