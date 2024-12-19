@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>typora图片插入解决方案</title>
+    <url>/2024/12/20/typora%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<p>hexo框架和typora编译器写blog时遇到了图片插入问题，先给出解决方案</p>
+<p>1.将<code>_config.yml</code> 文件中的<code>post_asset_folder</code> 选项设为 <code>true</code> </p>
+<p>2.设置typora</p>
+<p>​    <img src="/2024/12/20/typora%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/1734631862180.png" class="" title="typora设置"></p>
+<p>3.下载插件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-asset-img --save</span><br></pre></td></tr></table></figure>
+
+
+
+<p>4.直接复制图片即可，不用改文件地址，即可在typora里预览，因为这是新版插件</p>
+<img src="/2024/12/20/typora%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/1734632109492.png" class="" width="1734632109492">
+
+<p>5.可以先hexo s后看看public下html文件地址是否改了</p>
+<img src="/2024/12/20/typora%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/1734632272204.png" class="" width="1734632272204">
+
+
+
+<p>这种方式应该是最优的了，可以实现在typora里预览，而且不用另外对地址进行修改，但总觉得source下新建了很多文件夹，不能保持目录的简洁，理论上来讲，在构建完之后，source文件下的内容是可以删的，但这样就不能在hexo clean了。其次看我上个图地址中间是乱码，不知为什么，理应是汉字的，看别人分享的也是汉字。</p>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>typora</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>重拾java基础系列1</title>
     <url>/2024/11/23/%E9%87%8D%E6%8B%BEjava%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%971/</url>
     <content><![CDATA[<p>研一第一学期即将过去了，java知识已将大半年没有碰了，最近实验室没有什么任务，刚好利用空闲时间回顾一下java基础，带着更多的知识回看Java基础，确实能引起第一次学习java时没有的思考，达到温故知新的效果。</p>
